@@ -1,7 +1,27 @@
-<script setup></script>
+<script setup>
+  import { onBeforeMount, ref } from "vue";
+  import { getPosts } from "@/api/jsonplaceholder.js";
+
+  import PostItem from "@/components/PostItem.vue";
+
+  const posts = ref([]);
+
+  onBeforeMount(() => {
+    getPosts().then((p) => (posts.value = p));
+  });
+</script>
 
 <template>
-  <main>
-    <h1>Hello world</h1>
+  <main class="my-0 mx-auto max-w-screen-2xl py-12 px-4">
+    <h1
+      class="line max-w-xl font-sans text-5xl font-bold leading-snug text-gray-900"
+    >
+      The most popular posts from JSONplaceholder!
+    </h1>
+    <p class="pt-6 font-sans text-base font-normal text-gray-900">
+      Click on the post to see graph of commentators names
+    </p>
+
+    <PostItem v-for="post in posts" :key="post.id" :post="post" />
   </main>
 </template>
