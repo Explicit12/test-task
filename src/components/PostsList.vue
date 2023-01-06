@@ -21,6 +21,8 @@
     },
   });
 
+  defineEmits(["pickPost"]);
+
   const slicedPostsList = computed(() =>
     [...props.posts].slice(props.from, props.to),
   );
@@ -29,7 +31,7 @@
 <template>
   <ul class="flex flex-col gap-6 py-12">
     <li v-for="post in slicedPostsList" :key="post.id">
-      <PostItem :post="post" />
+      <PostItem :post="post" @click="$emit('pickPost', post)" />
     </li>
   </ul>
 </template>
