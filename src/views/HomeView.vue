@@ -2,7 +2,7 @@
   import { onBeforeMount, ref } from "vue";
   import { getPosts, getPostsComments } from "@/api/jsonplaceholder.js";
 
-  import PostItem from "@/components/PostItem.vue";
+  import PostsList from "@/components/PostsList.vue";
 
   const posts = ref([]);
 
@@ -33,7 +33,6 @@
     <p class="pt-6 font-sans text-base font-normal text-gray-900">
       Click on the post to see graph of commentators names
     </p>
-
-    <PostItem v-for="post in posts" :key="post.id" :post="post" />
+    <PostsList :posts="posts" from="0" to="10" />
   </main>
 </template>
