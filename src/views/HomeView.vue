@@ -1,14 +1,26 @@
 <script setup>
   import { onBeforeMount, ref } from "vue";
-  import { getPosts } from "@/api/jsonplaceholder.js";
+  import { getPosts, getPostsComments } from "@/api/jsonplaceholder.js";
 
   import PostItem from "@/components/PostItem.vue";
 
   const posts = ref([]);
 
-  onBeforeMount(() => {
-    getPosts().then((p) => (posts.value = p));
-  });
+  async function getPostsData() {
+    const resPosts = await getPosts();
+    const postWithComments = Promise.all(
+      resPosts.map(async (post) => {
+        const postComments = await getPostsComments(post.id);
+        post.comments = postComments;
+
+        return post;
+      }),
+    );
+
+    return postWithComments;
+  }
+
+  onBeforeMount(() => getPostsData().then((p) => (posts.value = p)));
 </script>
 
 <template>

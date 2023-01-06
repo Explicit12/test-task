@@ -1,10 +1,12 @@
 <script setup>
-  import { defineProps } from "vue";
-
   defineProps({
     post: {
       required: true,
-      default: { title: "Title", body: "Some interesting text here..." },
+      default: {
+        title: "Title",
+        body: "Some interesting text here...",
+        comments: [],
+      },
     },
   });
 </script>
@@ -19,5 +21,9 @@
     <p class="font-sans text-base font-normal text-gray-900">
       {{ post.body }}
     </p>
+
+    <i class="font-sans text-sm font-normal text-gray-900">
+      {{ post.comments.length }} comments
+    </i>
   </article>
 </template>

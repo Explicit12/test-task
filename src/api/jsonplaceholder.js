@@ -6,3 +6,10 @@ export async function getPosts() {
 
   return posts;
 }
+
+export async function getPostsComments(postId) {
+  const response = await fetch(API + "/comments?postId=" + postId);
+  const comments = await response.json();
+
+  return comments;
+}
