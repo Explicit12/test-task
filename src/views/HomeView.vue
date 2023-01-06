@@ -1,10 +1,13 @@
 <script setup>
   import { onBeforeMount, ref } from "vue";
   import { getPosts, getPostsComments } from "@/api/jsonplaceholder.js";
+  import { useRoute } from "vue-router";
 
   import PostsList from "@/components/PostsList.vue";
+  import ThePagination from "@/components/ThePagination.vue";
 
   const posts = ref([]);
+  const route = useRoute();
 
   async function getPostsData() {
     const resPosts = await getPosts();
@@ -33,6 +36,11 @@
     <p class="pt-6 font-sans text-base font-normal text-gray-900">
       Click on the post to see graph of commentators names
     </p>
-    <PostsList :posts="posts" from="0" to="10" />
+    <PostsList
+      :posts="posts"
+      :from="0 || Number(route.params.page) * 10 - 10"
+      :to="Number(route.params.page) * 10"
+    />
+    <ThePagination :pages="posts.length / 10" />
   </main>
 </template>
