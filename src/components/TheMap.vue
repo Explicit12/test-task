@@ -4,11 +4,27 @@
 
   import MapModal from "@/components/MapModal.vue";
 
+  import markerIcon from "leaflet/dist/images/marker-icon.png";
+  import markerIconShadow from "leaflet/dist/images/marker-shadow.png";
   import "leaflet/dist/leaflet.css";
 
   const tileLayer = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
   const attribution =
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
+  // https://github.com/Leaflet/Leaflet/issues/4968
+  const defaultIcon = L.icon({
+    iconUrl: markerIcon,
+    shadowUrl: markerIconShadow,
+
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41],
+  });
+  L.Marker.prototype.options.icon = defaultIcon;
+
   let map = null;
 
   const isModalOpend = ref(false);
