@@ -6,6 +6,7 @@
   import PostsList from "@/components/PostsList.vue";
   import ThePagination from "@/components/ThePagination.vue";
   import NamesLengthGraph from "@/components/NamesLengthGraph.vue";
+  import TheInput from "@/components/TheInput.vue";
 
   const posts = ref([]);
   const route = useRoute();
@@ -57,12 +58,12 @@
       >
         The most popular posts from JSONplaceholder!
       </h1>
-      <form>
-        <input
-          class="rounded-md border-2 border-gray-600 bg-gray-200 py-4 px-6 font-sans text-base font-normal text-gray-900 placeholder:text-gray-600 focus:border-gray-900"
-          type="text"
+      <form class="max-w-sm">
+        <TheInput
           v-model="filterText"
           placeholder="Search by title..."
+          label="Search by title"
+          labelSrOnly
         />
       </form>
       <p class="pt-6 font-sans text-base font-normal text-gray-900">

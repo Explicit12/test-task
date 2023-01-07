@@ -1,5 +1,7 @@
 <script setup>
-  import { watch, ref, computed } from "vue";
+  import { watch, ref, computed, onBeforeMount } from "vue";
+
+  import TheInput from "@/components/TheInput.vue";
 
   const props = defineProps({
     open: {
@@ -32,10 +34,15 @@
   watch(
     () => props.open,
     (newVal) => {
+      console.log(newVal);
       if (newVal) document.body.style.overflow = "hidden";
       else document.body.style.overflow = "visible";
     },
   );
+
+  onBeforeMount(() => {
+    document.body.style.overflow = "hidden";
+  });
 </script>
 
 <template>
@@ -64,37 +71,9 @@
         </div>
       </div>
       <div class="flex flex-col gap-6 p-6 lg:flex-row">
-        <div class="flex flex-col">
-          <label class="pb-2 font-sans text-sm font-normal text-gray-900">
-            Point name
-          </label>
-          <input
-            v-model="name"
-            class="rounded-md border-2 border-gray-600 bg-gray-200 py-4 px-6 font-sans text-base font-normal text-gray-900 placeholder:text-gray-600 focus:border-gray-900"
-            type="text"
-            placeholder="Any name"
-          />
-        </div>
-        <div class="flex flex-col">
-          <label class="pb-2 font-sans text-sm font-normal text-gray-900">
-            Latitude
-          </label>
-          <input
-            v-model="latInput"
-            class="rounded-md border-2 border-gray-600 bg-gray-200 py-4 px-6 font-sans text-base font-normal text-gray-900 placeholder:text-gray-600 focus:border-gray-900"
-            type="text"
-          />
-        </div>
-        <div class="flex flex-col">
-          <label class="pb-2 font-sans text-sm font-normal text-gray-900">
-            Longitude
-          </label>
-          <input
-            v-model="lngInput"
-            class="rounded-md border-2 border-gray-600 bg-gray-200 py-4 px-6 font-sans text-base font-normal text-gray-900 placeholder:text-gray-600 focus:border-gray-900"
-            type="text"
-          />
-        </div>
+        <TheInput v-model="name" placeholder="Any name" label="Point name" />
+        <TheInput v-model="latInput" placeholder="0" label="Latitude" />
+        <TheInput v-model="lngInput" placeholder="0" label="Longitude" />
       </div>
     </form>
   </div>
