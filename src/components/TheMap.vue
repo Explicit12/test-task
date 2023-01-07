@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted, ref } from "vue";
+  import { onMounted, ref, watch } from "vue";
   import L from "leaflet";
 
   import MapModal from "@/components/MapModal.vue";
@@ -13,6 +13,7 @@
 
   const isModalOpend = ref(false);
   const promptLatlng = ref({ lat: 0, lng: 0 });
+  const pointsData = ref([]);
 
   function handlePrompt(prompt) {
     if (!prompt) {
@@ -21,6 +22,7 @@
     }
 
     addPoint(prompt);
+    pointsData.value.push(prompt);
     isModalOpend.value = false;
   }
 
@@ -42,8 +44,21 @@
     }).addTo(map);
   }
 
+  watch(
+    () => pointsData.value.length,
+    () => {
+      window.localStorage.setItem(
+        "mapPoints",
+        JSON.stringify(pointsData.value),
+      );
+    },
+  );
+
   onMounted(() => {
     initMap();
+    pointsData.value =
+      JSON.parse(window.localStorage.getItem("mapPoints")) || [];
+    pointsData.value.forEach(addPoint);
     map.on("click", (e) => {
       promptLatlng.value = e.latlng;
       isModalOpend.value = true;
