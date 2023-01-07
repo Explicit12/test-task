@@ -18,7 +18,7 @@
 
   const filteredPosts = computed(() => {
     return posts.value.filter((post) =>
-      post.title.startsWith(filterText.value),
+      post.title.startsWith(filterText.value.toLocaleLowerCase()),
     );
   });
 
