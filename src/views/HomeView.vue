@@ -29,8 +29,12 @@
     return currentViewportWidth.value <= 1024;
   });
 
-  watch(filteredPosts, () => {
-    router.replace({ name: route.name, params: { page: 1 } });
+  const pageFrom = computed(() => {
+    return Number(route.params.page) * 10 - 10;
+  });
+
+  const pageTo = computed(() => {
+    return Number(route.params.page) * 10;
   });
 
   function getViewportWidth() {
@@ -50,6 +54,10 @@
 
     return postWithComments;
   }
+
+  watch(filteredPosts, () => {
+    router.replace({ name: route.name, params: { page: 1 } });
+  });
 
   onBeforeMount(() => {
     getPostsData().then((p) => {
@@ -92,8 +100,8 @@
       <div>
         <PostsList
           :posts="filteredPosts"
-          :from="0 || Number(route.params.page) * 10 - 10"
-          :to="Number(route.params.page) * 10"
+          :from="pageFrom"
+          :to="pageTo"
           @pick-post="(post) => (pickedPost = post)"
         />
         <ThePagination :pages="Math.round(filteredPosts.length / 10)" />
