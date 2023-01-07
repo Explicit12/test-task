@@ -12,13 +12,15 @@
           :class="{ underline: route.name === 'home' }"
           class="font-sans text-2xl font-medium text-white hover:cursor-pointer hover:underline"
         >
-          <RouterLink to="/">Home</RouterLink>
+          <RouterLink :to="{ name: 'home', params: { page: 1 } }">
+            Home
+          </RouterLink>
         </li>
         <li
           :class="{ underline: route.name === 'map' }"
           class="font-sans text-2xl font-medium text-white hover:cursor-pointer hover:underline"
         >
-          <RouterLink to="/">Map</RouterLink>
+          <RouterLink :to="{ name: 'map' }">Map</RouterLink>
         </li>
       </ul>
     </nav>
