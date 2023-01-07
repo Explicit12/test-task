@@ -18,6 +18,11 @@ const router = createRouter({
       name: "map",
       component: () => import("@/views/MapView.vue"),
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "notFound",
+      component: () => import("@/views/NotFound.vue"),
+    },
   ],
 });
 
