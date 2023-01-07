@@ -107,22 +107,24 @@
         <ThePagination :pages="Math.round(filteredPosts.length / 10)" />
       </div>
 
-      <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
-        <div class="relative max-lg:w-[678px] max-lg:py-6 lg:w-full">
+      <template v-if="posts.length">
+        <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
+          <div class="relative max-lg:w-[678px] max-lg:py-6 lg:w-full">
+            <NamesLengthGraph
+              :key="pickedPostEmails"
+              :emails="pickedPostEmails"
+            />
+          </div>
+        </div>
+
+        <div v-else class="relative w-full max-w-[60%] shrink max-lg:py-6">
           <NamesLengthGraph
+            class="lg:sticky lg:top-6"
             :key="pickedPostEmails"
             :emails="pickedPostEmails"
           />
         </div>
-      </div>
-
-      <div v-else class="relative w-full max-w-[60%] shrink max-lg:py-6">
-        <NamesLengthGraph
-          :key="pickedPostEmails"
-          class="lg:sticky lg:top-6"
-          :emails="pickedPostEmails"
-        />
-      </div>
+      </template>
     </section>
   </main>
 </template>
