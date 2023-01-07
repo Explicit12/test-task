@@ -76,7 +76,7 @@
 
 <template>
   <main
-    class="my-0 mx-auto max-w-screen-2xl py-12 px-4 max-lg:overflow-x-hidden"
+    class="my-0 mx-auto min-h-screen max-w-screen-2xl py-12 px-4 max-lg:overflow-x-hidden"
   >
     <section>
       <h1
