@@ -36,12 +36,12 @@
     (newVal) => {
       console.log(newVal);
       if (newVal) document.body.style.overflow = "hidden";
-      else document.body.style.overflow = "visible";
+      else document.body.style.overflow = "scroll";
     },
   );
 
   onBeforeMount(() => {
-    document.body.style.overflow = "hidden";
+    if (props.open) document.body.style.overflow = "hidden";
   });
 </script>
 
