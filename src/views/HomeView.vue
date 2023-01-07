@@ -98,7 +98,7 @@
     </section>
 
     <section class="lg:flex lg:gap-4">
-      <div v-if="posts.length">
+      <div v-if="filteredPosts.length">
         <PostsList
           :posts="filteredPosts"
           :from="pageFrom"
@@ -108,9 +108,9 @@
         <ThePagination :pages="Math.round(filteredPosts.length / 10)" />
       </div>
 
-      <TheLoader v-else class="mt-6 h-[368px] w-full" />
+      <TheLoader v-else-if="!posts.length" class="mt-6 h-[368px] w-full" />
 
-      <template v-if="posts.length">
+      <template v-if="filteredPosts.length">
         <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
           <div class="relative max-lg:w-[678px] max-lg:py-6 lg:w-full">
             <NamesLengthGraph
