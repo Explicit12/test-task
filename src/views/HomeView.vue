@@ -1,5 +1,5 @@
 <script setup>
-  import { onBeforeMount, ref, computed, watch } from "vue";
+  import { onBeforeMount, ref, computed, watch, onBeforeUnmount } from "vue";
   import { getPosts, getPostsComments } from "@/api/jsonplaceholder.js";
   import { useRoute, useRouter } from "vue-router";
 
@@ -13,6 +13,7 @@
   const router = useRouter();
   const filterText = ref("");
   const pickedPost = ref(null);
+  const currentViewportWidth = ref(window.innerWidth);
 
   const filteredPosts = computed(() => {
     return posts.value.filter((post) =>
@@ -24,9 +25,17 @@
     return pickedPost.value?.comments.map((comment) => comment.email);
   });
 
+  const isLgAndSmaller = computed(() => {
+    return currentViewportWidth.value <= 1024;
+  });
+
   watch(filteredPosts, () => {
     router.replace({ name: route.name, params: { page: 1 } });
   });
+
+  function getViewportWidth() {
+    currentViewportWidth.value = window.innerWidth;
+  }
 
   async function getPostsData() {
     const resPosts = await getPosts();
@@ -47,14 +56,22 @@
       posts.value = p;
       pickedPost.value = filteredPosts.value[0];
     });
+
+    window.addEventListener("resize", getViewportWidth);
+  });
+
+  onBeforeUnmount(() => {
+    window.removeEventListener("resize", getViewportWidth);
   });
 </script>
 
 <template>
-  <main class="my-0 mx-auto max-w-screen-2xl py-12 px-4">
+  <main
+    class="my-0 mx-auto max-w-screen-2xl py-12 px-4 max-lg:overflow-x-hidden"
+  >
     <section>
       <h1
-        class="line mb-6 max-w-xl font-sans text-5xl font-bold leading-snug text-gray-900"
+        class="line mb-6 max-w-xl font-sans text-3xl font-bold leading-snug text-gray-900 lg:text-5xl"
       >
         The most popular posts from JSONplaceholder!
       </h1>
@@ -71,8 +88,8 @@
       </p>
     </section>
 
-    <section class="lg:flex lg:last:gap-6">
-      <div class="lg:basis-3/5">
+    <section class="lg:flex lg:gap-4">
+      <div>
         <PostsList
           :posts="filteredPosts"
           :from="0 || Number(route.params.page) * 10 - 10"
@@ -82,7 +99,16 @@
         <ThePagination :pages="Math.round(filteredPosts.length / 10)" />
       </div>
 
-      <div class="relative w-full max-lg:py-6">
+      <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
+        <div class="relative max-lg:w-[678px] max-lg:py-6 lg:w-full">
+          <NamesLengthGraph
+            :key="pickedPostEmails"
+            :emails="pickedPostEmails"
+          />
+        </div>
+      </div>
+
+      <div v-else class="relative w-full max-w-[60%] shrink max-lg:py-6">
         <NamesLengthGraph
           :key="pickedPostEmails"
           class="lg:sticky lg:top-6"

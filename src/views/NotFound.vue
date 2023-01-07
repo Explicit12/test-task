@@ -7,7 +7,7 @@
     class="my-0 mx-auto flex h-screen max-w-screen-2xl flex-col items-center justify-center py-12 px-4"
   >
     <h1
-      class="max-w-xl pb-6 text-center font-sans text-5xl font-bold leading-snug text-gray-900"
+      class="max-w-xl pb-6 text-center font-sans text-3xl font-bold leading-snug text-gray-900 lg:text-5xl"
     >
       Ooops! This page doesn't exist! ¯\_(ツ)_/¯
     </h1>
