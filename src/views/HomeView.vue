@@ -5,7 +5,7 @@
 
   import PostsList from "@/components/PostsList.vue";
   import ThePagination from "@/components/ThePagination.vue";
-  import NamesLengthGraph from "@/components/NamesLengthGraph.vue";
+  import EmailsLengthGraph from "@/components/EmailsLengthGraph.vue";
   import TheInput from "@/components/TheInput.vue";
   import TheLoader from "@/components/TheLoader.vue";
 
@@ -113,7 +113,7 @@
       <template v-if="filteredPosts.length">
         <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
           <div class="relative max-lg:w-[678px] max-lg:py-6 lg:w-full">
-            <NamesLengthGraph
+            <EmailsLengthGraph
               :key="pickedPostEmails"
               :emails="pickedPostEmails"
             />
@@ -121,7 +121,7 @@
         </div>
 
         <div v-else class="relative w-full max-w-[60%] shrink max-lg:py-6">
-          <NamesLengthGraph
+          <EmailsLengthGraph
             class="lg:sticky lg:top-6"
             :key="pickedPostEmails"
             :emails="pickedPostEmails"
