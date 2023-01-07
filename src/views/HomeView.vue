@@ -7,6 +7,7 @@
   import ThePagination from "@/components/ThePagination.vue";
   import NamesLengthGraph from "@/components/NamesLengthGraph.vue";
   import TheInput from "@/components/TheInput.vue";
+  import TheLoader from "@/components/TheLoader.vue";
 
   const posts = ref([]);
   const route = useRoute();
@@ -97,7 +98,7 @@
     </section>
 
     <section class="lg:flex lg:gap-4">
-      <div>
+      <div v-if="posts.length">
         <PostsList
           :posts="filteredPosts"
           :from="pageFrom"
@@ -106,6 +107,8 @@
         />
         <ThePagination :pages="Math.round(filteredPosts.length / 10)" />
       </div>
+
+      <TheLoader v-else class="mt-6 h-[368px] w-full" />
 
       <template v-if="posts.length">
         <div v-if="isLgAndSmaller" class="w-full max-lg:overflow-x-scroll">
